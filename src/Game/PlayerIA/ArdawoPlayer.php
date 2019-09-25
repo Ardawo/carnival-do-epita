@@ -17,6 +17,27 @@ class ArdawoPlayer extends Player
 
     public function getChoice()
     {
+      $stats = $this->result->getStats();
+      $myChoices = $stats['a'];
+      $oppChoices = $stats['b'];
+      $finalChoice = 1;
+      $minChoiceOpp = $oppChoices['scissors'];
+      if ($minChoiceOpp > $oppChoices['paper']) {
+        $minChoiceOpp = $oppChoices['paper'];
+        $finalChoice = 2;
+      }
+      if ($minChoiceOpp > $oppChoices['rock']) {
+        $minChoiceOpp = $oppChoices['rock'];
+        $finalChoice = 3;
+        return parent::rockChoice();
+      }
+      if ($finalChoice == 2) {
+        return parent::paperChoice();
+      }
+      if ($finalChoice == 1) {
+        return parent::scissorsChoice();
+      }
+
         // -------------------------------------    -----------------------------------------------------
         // How to get my Last Choice           ?    $this->result->getLastChoiceFor($this->mySide) -- if 0 (first round)
         // How to get the opponent Last Choice ?    $this->result->getLastChoiceFor($this->opponentSide) -- if 0 (first round)
