@@ -18,8 +18,40 @@ class ArdawoPlayer extends Player
     public function getChoice()
     {
       $stats = $this->result->getStats();
+      $scissors = 0;
+      $paper = 0;
+      $rock = 0;
+
       $myChoices = $stats['a'];
       $oppChoices = $stats['b'];
+      $getOppChoices = $this->result->getChoicesFor($this->opponentSide);
+      $getOppScores = $this->result->getScoresFor($this->opponentSide);
+      $i = 0;
+      foreach ($getOppChoices as $key => $value) {
+        $score = $getOppScores[$i];
+        if ($value == 'scissors') $scissors += $score;
+        if ($value == 'paper') $paper += $score;
+        if ($value == 'rock') $rock += $score;
+        $i = $i + 1;
+      }
+      $minChoiceOpp = 0;
+      $rtVal = parent::paperChoice();
+      if ($scissors < $minChoiceOpp) $rtVal =  parent::rockChoice();
+      if ($paper < $minChoiceOpp) $rtVal =  parent::scissorsChoice();
+      if ($rock < $minChoiceOpp) $rtVal =  parent::paperChoice();
+      return $rtVal;
+
+      if ($this->result->getNbRound() > 0) {
+        $ch = $this->result->getLastChoiceFor($this->opponentSide);
+        $lastScore = $this->result->getLastScoreFor($this->opponentSide);
+        if ($lastScore == 5) {
+          if ($ch == $getOppChoices[count($array)-2]) {
+            if ($ch == 'scissors') return parent::rockChoice();
+            if ($ch == 'paper') return parent::scissorsChoice();
+            if ($ch == 'rock') return parent::paperChoice();
+          }
+        }
+      }
       $finalChoice = 1;
       $minChoiceOpp = $oppChoices['scissors'];
       if ($minChoiceOpp > $oppChoices['paper']) {
