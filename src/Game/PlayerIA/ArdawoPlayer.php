@@ -18,9 +18,9 @@ class ArdawoPlayer extends Player
     public function getChoice()
     {
       $lastCH = $this->result->getLastChoiceFor($this->opponentSide);
-      if ("paper" == $lastCH) return parent::rockChoice();
-      if ("rock" == $lastCH) return parent::scissorsChoice();
-      if ("scissors" == $lastCH) return parent::paperChoice();
+      if ("scissors" == $lastCH) return parent::rockChoice();
+      if ("paper" == $lastCH) return parent::scissorsChoice();
+      if ("rock" == $lastCH) return parent::paperChoice();
 
 
       $stats = $this->result->getStats();
